@@ -55,25 +55,27 @@ const  getOne = async (req,res)=>{
         console.log(error.message)
     }
 }
-// const updates =async (req,res)=>{
-//     try{
-//     // id=req.params.id
-//     const check = await cloudinary.uploader.upload(req.file.path, {new:true})
-//     const stdUptd = await model.findByIdAndUpdate(req.params.id,{
-//              schoolname: req.body.schoolname,
-//              schoollocation: req.body.schoollocation,
-//              cloud_url: check.secure_url,
-//              cloud_id: check.public_id,
-//              image: req.file.path
-//     }, {new:true})
-//     await fs.writeFile(stdUptd.image)
-//     res.status(201).json({
-//         status:"updated succefully",
-//         data:stdUptd})
-//     }catch(error){
-//         console.log(error.message)
-//     }
-// }
+const updates =async (req,res)=>{
+    try{
+        id=req.params.id
+        let school = await model.findById(id)
+        if(!school){
+            res.status(404).json({message:"the identity passed not"})
+        }
+    const stdUptd = await model.findByIdAndUpdate(req.params.id,{
+             schoolname: req.body.schoolname,
+             schoollocation: req.body.schoollocation,
+             cloud_url: check.secure_url,
+             cloud_id: check.public_id,
+             image: req.file.path
+    }, {new:true})   
+    res.status(201).json({
+        status:"updated succefully",
+        data:stdUptd})
+    }catch(error){
+        console.log(error.message)
+    }
+}
 const deletes = async (req,res)=>{
     try{
       id= req.params.id
@@ -100,6 +102,6 @@ module.exports={
     Create,
     ReadAll,
     getOne,
-    // updates,
+    updates,
     deletes
 }
