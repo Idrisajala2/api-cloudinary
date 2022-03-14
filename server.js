@@ -1,6 +1,6 @@
 require("./config/db")
 const express = require("express")
-const port = 4231
+const port = process.env.PORT || 4231
 const app = express()
 const route = require("./router/router")
 

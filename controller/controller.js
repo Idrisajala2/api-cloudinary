@@ -3,6 +3,7 @@ const fs = require ("fs")
 const cloudinary = require("../config/cloudinary")
 const Create = async(req, res)=>{
     try {
+        
         const result = await cloudinary.uploader.upload(req.file.path)
         const createNew = await model.create({
              schoolname: req.body.schoolname,
@@ -57,18 +58,21 @@ const  getOne = async (req,res)=>{
 }
 const updates =async (req,res)=>{
     try{
-        id=req.params.id
-        let school = await model.findById(id)
-        if(!school){
-            res.status(404).json({message:"the identity passed not"})
-        }
-    const stdUptd = await model.findByIdAndUpdate(req.params.id,{
-             schoolname: req.body.schoolname,
-             schoollocation: req.body.schoollocation,
-             cloud_url: check.secure_url,
-             cloud_id: check.public_id,
-             image: req.file.path
-    }, {new:true})   
+        const cloud = await cloudinary.uploader.upload(req.file.path);
+        const stdUptd = await model.findByIdAndUpdate(req.params.id,{
+                 schoolname: req.body.schoolname,
+                 schoollocation: req.body.schoollocation,
+                 cloud_url: cloud.secure_url,
+                 cloud_id: cloud.public_id,
+                 image: req.file.path
+        }, {new:true})  
+        // id=req.params.id
+        // let school = await model.findById(id)
+        // if(!school){
+        //     res.status(404).json({message:"the identity passed not"})
+
+        // }
+       
     res.status(201).json({
         status:"updated succefully",
         data:stdUptd})
