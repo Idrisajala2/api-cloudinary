@@ -4,7 +4,7 @@ const {Create, ReadAll,getOne,updates,deletes} = require("../controller/controll
 const imageUploader = require('../multer/multer')
 
 route.post("/post", imageUploader, Create)
-route.get("/get",ReadAll)
+route.get("/get", ReadAll)
 route.get("/get/:id",getOne)
 route.patch("/patch/:id", imageUploader, updates)
 route.delete("/delete/:id",deletes)
